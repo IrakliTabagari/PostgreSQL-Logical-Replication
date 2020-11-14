@@ -120,6 +120,7 @@ ALTER SYSTEM SET max_worker_processes   = 20;
 docker container restart reporting-postgres
 ```
 4. Create Subscription
+
 4.1 At first we have to find prod-postgres container IP Address. For this run this command in console
 ```docker
 docker inspect --format '{{ .NetworkSettings.IPAddress }}' prod-postgres
