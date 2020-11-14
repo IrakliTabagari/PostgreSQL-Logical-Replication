@@ -77,7 +77,7 @@ Now we have to create tables and procedures on production and fill tables with r
 
 ## 5. Create Tables on Reporting PostgreSQL Server
 1. Connect to Production PostgreSQL Server (*host=172.0.0.1 port=5433 user=postgres password=987654321 dbname=postgres*)
-2. Run Scripts From [production_schema.sql](https://github.com/IrakliTabagari/PostgreSQL-Logical-Replication/blob/main/production_schema.sql) file 
+2. Run Scripts From [reporting_schema.sql](https://github.com/IrakliTabagari/PostgreSQL-Logical-Replication/blob/main/reporting_schema.sql) file 
 
 ## 5. Configure PostgreSQL Servers for replication
 In this step we will run scripts that will change PostgreSQL configuration parameters
@@ -130,3 +130,6 @@ CREATE SUBSCRIPTION all_subscription
     CONNECTION 'host=[prod-postgres container ip] port=5432 user=replication_user password=111222333 dbname=postgres'
     PUBLICATION alltables;
 ```
+
+## 7. Run data manipulation procedures on Production and check replication again
+Run Scripts from [data_manipulation_scripts.sql](https://github.com/IrakliTabagari/PostgreSQL-Logical-Replication/blob/main/data_manipulation_scripts.sql) file
