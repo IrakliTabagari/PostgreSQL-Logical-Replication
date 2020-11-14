@@ -64,8 +64,16 @@ c04a0a6828c5        postgres            "docker-entrypoint.s…"   5 days ago   
 e452184fbe7b        postgres            "docker-entrypoint.s…"   5 days ago          Up 3 hours          0.0.0.0:5432->5432/tcp   prod-postgres
 ```
 
-## 4. Create Tables On Productoin PostgreSQL server
+## 4. Create Tables and procedures on Productoin PostgreSQL server
+Now we have to create tables on production schema
 
+#### 4.1 Create tables
+1. Connect to Production PostgreSQL Server (host=172.17.0.2 port=5432 user=postgres password=123456789 dbname=postgres)
+2. Run Scripts From production_schema.sql file
+
+#### 4.2 Run procedures to fill tables
+1. Connect to Production PostgreSQL Server (host=172.17.0.2 port=5432 user=postgres password=123456789 dbname=postgres)
+2. Run Scripts From data_manipulation_scripts.sql file
 
 ## 5. Configure PostgreSQL Servers for replication
 In this step we will run scripts that will change PostgreSQL configuration parameters
