@@ -69,11 +69,11 @@ Now we have to create tables on production schema
 
 #### 4.1 Create tables
 1. Connect to Production PostgreSQL Server (host=172.17.0.2 port=5432 user=postgres password=123456789 dbname=postgres)
-2. Run Scripts From production_schema.sql file
+2. Run Scripts From [production_schema.sql](https://github.com/IrakliTabagari/PostgreSQL-Logical-Replication/blob/main/production_schema.sql) file
 
 #### 4.2 Run procedures to fill tables
 1. Connect to Production PostgreSQL Server (host=172.17.0.2 port=5432 user=postgres password=123456789 dbname=postgres)
-2. Run Scripts From data_manipulation_scripts.sql file
+2. Run Scripts From [data_manipulation_scripts.sql](https://github.com/IrakliTabagari/PostgreSQL-Logical-Replication/blob/main/data_manipulation_scripts.sql) file
 
 ## 5. Configure PostgreSQL Servers for replication
 In this step we will run scripts that will change PostgreSQL configuration parameters
