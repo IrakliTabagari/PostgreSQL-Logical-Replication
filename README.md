@@ -55,7 +55,7 @@ docker run --detach \
 #### 3.3 Check running containers
 Run this command to vew running containers
 ```docker
-dockerps
+docker ps
 ```
 You will see the result like this:
 ```docker
