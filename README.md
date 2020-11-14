@@ -102,7 +102,7 @@ GRANT USAGE ON SCHEMA public TO replication_user;
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO replication_user;
 GRANT SELECT, USAGE ON ALL SEQUENCES IN SCHEMA public TO replication_user;
 ```
-5. Restart Productin container
+5. Restart Productin container. Run foloowing command in console
 ```docker
 docker container restart prod-postgres
 ```
@@ -115,12 +115,16 @@ ALTER SYSTEM SET max_replication_slots = 5;
 ALTER SYSTEM SET max_logical_replication_workers  = 10;
 ALTER SYSTEM SET max_worker_processes   = 20;
 ```
-3. Create Subscription
-3.1 At first we have to find prod-postgres container IP Address. For this run this command in console
+3. Restart Productin container. Run foloowing command in console
+```docker
+docker container restart reporting-postgres
+```
+4. Create Subscription
+4.1 At first we have to find prod-postgres container IP Address. For this run this command in console
 ```docker
 docker inspect --format '{{ .NetworkSettings.IPAddress }}' prod-postgres
 ```
-3.2 run folowing script on database that will create
+4.2 run folowing script on database that will create
 ```sql
 CREATE SUBSCRIPTION all_subscription
     CONNECTION 'host=[prod-postgres container ip] port=5432 user=replication_user password=111222333 dbname=postgres'
