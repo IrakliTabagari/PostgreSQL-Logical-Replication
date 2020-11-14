@@ -65,21 +65,25 @@ e452184fbe7b        postgres            "docker-entrypoint.s…"   5 days ago   
 ```
 
 ## 4. Create Tables and procedures on Productoin PostgreSQL server
-Now we have to create tables on production schema
+Now we have to create tables and procedures on production and fill tables by running procedures
 
 #### 4.1 Create tables
-1. Connect to Production PostgreSQL Server (host=172.17.0.2 port=5432 user=postgres password=123456789 dbname=postgres)
+1. Connect to Production PostgreSQL Server (*host=172.0.0.1 port=5432 user=postgres password=123456789 dbname=postgres*)
 2. Run Scripts From [production_schema.sql](https://github.com/IrakliTabagari/PostgreSQL-Logical-Replication/blob/main/production_schema.sql) file
 
 #### 4.2 Run procedures to fill tables
-1. Connect to Production PostgreSQL Server (host=172.17.0.2 port=5432 user=postgres password=123456789 dbname=postgres)
+1. Connect to Production PostgreSQL Server (*host=172.0.0.1 port=5432 user=postgres password=123456789 dbname=postgres*)
 2. Run Scripts From [data_manipulation_scripts.sql](https://github.com/IrakliTabagari/PostgreSQL-Logical-Replication/blob/main/data_manipulation_scripts.sql) file
+
+## 5. Create Tables on Reporting PostgreSQL Server
+1. Connect to Production PostgreSQL Server (*host=172.0.0.1 port=5433 user=postgres password=987654321 dbname=postgres*)
+2. Run Scripts From [production_schema.sql](https://github.com/IrakliTabagari/PostgreSQL-Logical-Replication/blob/main/production_schema.sql) file 
 
 ## 5. Configure PostgreSQL Servers for replication
 In this step we will run scripts that will change PostgreSQL configuration parameters
 
-#### 5.1 Production Server
-1. Connect to Production PostgreSQL Server (host=172.17.0.2 port=5432 user=postgres password=123456789 dbname=postgres)
+#### 6.1 Production Server
+1. Connect to Production PostgreSQL Server (*host=172.0.0.1 port=5432 user=postgres password=123456789 dbname=postgres*)
 2. Change configuration parameters by running this scripts
 ```sql
 ALTER SYSTEM SET wal_level = logical;
@@ -98,18 +102,27 @@ GRANT USAGE ON SCHEMA public TO replication_user;
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO replication_user;
 GRANT SELECT, USAGE ON ALL SEQUENCES IN SCHEMA public TO replication_user;
 ```
+5. Restart Productin container
+```docker
+docker container restart prod-postgres
+```
 
-#### 5.2 Reporting server
-1. Connect to Reporting PostgreSQL Server (host=172.17.0.2 port=5433 user=postgres password=987654321 dbname=postgres)
-2. Change configuration parameters by running this scripts
+#### 6.2 Reporting server
+1. Connect to Reporting PostgreSQL Server (host=172.0.0.1 port=5433 user=postgres password=987654321 dbname=postgres)
+2. Change configuration parameters by running this scripts on database
 ```sql
 ALTER SYSTEM SET max_replication_slots = 5;
 ALTER SYSTEM SET max_logical_replication_workers  = 10;
 ALTER SYSTEM SET max_worker_processes   = 20;
 ```
 3. Create Subscription
+3.1 At first we have to find prod-postgres container IP Address. For this run this command in console
+```docker
+docker inspect --format '{{ .NetworkSettings.IPAddress }}' prod-postgres
+```
+3.2 run folowing script on database that will create
 ```sql
 CREATE SUBSCRIPTION all_subscription
-    CONNECTION 'host=172.17.0.2 port=5432 user=replication_user password=111222333 dbname=postgres'
+    CONNECTION 'host=[prod-postgres container ip] port=5432 user=replication_user password=111222333 dbname=postgres'
     PUBLICATION alltables;
 ```
