@@ -30,14 +30,25 @@ In this step we will run postgre images twice to create two containers:
 1. prod-postgres - primary server which will be *publisher*
 2. reporting-postgres - secondary server which will be *subscriber*
 
-#### 3.1 as primary server
+#### 3.1 Run image as *Production* server container
 ```docker
 docker run --detach \
     --name prod-postgres \
     --volume D:/docker_postgresql_data/prod:/var/lib/postgresql/data \
     --env POSTGRES_USER=postgres \
-    --env POSTGRES_PASSWORD=08011989 \
+    --env POSTGRES_PASSWORD=123456789 \
     --env POSTGRES_DB=postgres \
     --publish 5432:5432 \
+    postgres
+```
+#### 3.2 Run image as *Reporting* server container
+```docker
+docker run --detach \
+    --name reporting-postgres \
+    --volume D:/docker_postgresql_data/reporting:/var/lib/postgresql/data \
+    --env POSTGRES_USER=postgres \
+    --env POSTGRES_PASSWORD=987654321 \
+    --env POSTGRES_DB=postgres \
+    --publish 5433:5432 \
     postgres
 ```
