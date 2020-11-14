@@ -27,8 +27,8 @@ postgres                       latest               c96f8b6bc0d9        4 weeks 
 
 ### 3. Run postgres image 
 In this step we will run postgre images twice to create two containers:
-1. prod-postgres - primary server which will be *publisher*
-2. reporting-postgres - secondary server which will be *subscriber*
+1. **prod-postgres** - primary server which will be *publisher*
+2. **reporting-postgres** - secondary server which will be *subscriber*
 
 #### 3.1 Run postgres image as *Production* server container
 ```docker
@@ -52,3 +52,5 @@ docker run --detach \
     --publish 5433:5432 \
     postgres
 ```
+#### 3.3 Check running containers
+Run this command to vew running containers
