@@ -30,7 +30,7 @@ In this step we will run postgre images twice to create two containers:
 1. prod-postgres - primary server which will be *publisher*
 2. reporting-postgres - secondary server which will be *subscriber*
 
-#### 3.1 Run image as *Production* server container
+#### 3.1 Run postgres image as *Production* server container
 ```docker
 docker run --detach \
     --name prod-postgres \
@@ -41,7 +41,7 @@ docker run --detach \
     --publish 5432:5432 \
     postgres
 ```
-#### 3.2 Run image as *Reporting* server container
+#### 3.2 Run postgres image as *Reporting* server container
 ```docker
 docker run --detach \
     --name reporting-postgres \
