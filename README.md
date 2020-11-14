@@ -65,7 +65,7 @@ e452184fbe7b        postgres            "docker-entrypoint.s…"   5 days ago   
 ```
 
 ## 4. Create Tables and procedures on Productoin PostgreSQL server
-Now we have to create tables and procedures on production and fill tables by running procedures
+Now we have to create tables and procedures on production and fill tables with random data by running procedures
 
 #### 4.1 Create tables
 1. Connect to Production PostgreSQL Server (*host=172.0.0.1 port=5432 user=postgres password=123456789 dbname=postgres*)
