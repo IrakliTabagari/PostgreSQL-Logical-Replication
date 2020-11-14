@@ -26,7 +26,7 @@ postgres                       latest               c96f8b6bc0d9        4 weeks 
 ```
 
 ### 3. Run postgres image 
-In this step we will run postgre images twice to create two containers:
+In this step we will run postgres images twice to create two containers:
 1. **prod-postgres** - primary server which will be *publisher*
 2. **reporting-postgres** - secondary server which will be *subscriber*
 
@@ -54,3 +54,12 @@ docker run --detach \
 ```
 #### 3.3 Check running containers
 Run this command to vew running containers
+```docker
+dockerps
+```
+You will see the result like this:
+```docker
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS              PORTS                    NAMES
+c04a0a6828c5        postgres            "docker-entrypoint.s…"   5 days ago          Up 3 hours          0.0.0.0:5433->5432/tcp   reporting-postgres
+e452184fbe7b        postgres            "docker-entrypoint.s…"   5 days ago          Up 3 hours          0.0.0.0:5432->5432/tcp   prod-postgres
+```
