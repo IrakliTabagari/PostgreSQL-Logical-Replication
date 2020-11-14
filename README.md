@@ -72,7 +72,7 @@ In this step we will run scripts that will change PostgreSQL configuration param
 
 #### 5.1 Production Server
 1. Connect to Production PostgreSQL Server (host=172.17.0.2 port=5432 user=postgres password=123456789 dbname=postgres)
-2. Change configuration parameters
+2. Change configuration parameters by running this scripts
 ```sql
 ALTER SYSTEM SET wal_level = logical;
 ALTER SYSTEM SET max_replication_slots = 5;
@@ -81,4 +81,27 @@ ALTER SYSTEM SET max_wal_senders = 10;
 3. Crete publication
 ```sql
 CREATE PUBLICATION alltables FOR ALL TABLES;
+```
+4. Create database user for replication and grant nesessary (USAGE, SELECT) privileges
+```sql
+CREATE USER replication_user WITH PASSWORD '111222333' REPLICATION;
+
+GRANT USAGE ON SCHEMA public TO replication_user;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO replication_user;
+GRANT SELECT, USAGE ON ALL SEQUENCES IN SCHEMA public TO replication_user;
+```
+
+#### 5.2 Reporting server
+1. Connect to Reporting PostgreSQL Server (host=172.17.0.2 port=5433 user=postgres password=987654321 dbname=postgres)
+2. Change configuration parameters by running this scripts
+```sql
+ALTER SYSTEM SET max_replication_slots = 5;
+ALTER SYSTEM SET max_logical_replication_workers  = 10;
+ALTER SYSTEM SET max_worker_processes   = 20;
+```
+3. Create Subscription
+```sql
+CREATE SUBSCRIPTION all_subscription
+    CONNECTION 'host=172.17.0.2 port=5432 user=replication_user password=111222333 dbname=postgres'
+    PUBLICATION alltables;
 ```
